@@ -7,7 +7,7 @@ function autoClickElements(stage=0) {
         Infinity:1,
         InfinityBreak:2,
         InfinityBreak2:3,
-InfinityDimensions:4,
+        InfinityDimensions:4,
     }
 
 
@@ -39,12 +39,21 @@ InfinityDimensions:4,
         ONCE:99,
     };
     const logLevel1 = LogLevel.BigCrunchBrokenInfinity;
+
+    // function to log
+    function log(level, message) {
+        if (level >= logLevel1) {
+            console.log('[' + new Date().toLocaleString() + '][' + level + ']: ' + message);
+        }
+    }
+
+
     const scientificNotationMatch = /[\d.]+(?:[eE][+-]?\d+)?/g;
 
     // Function to get the current boost value
     function getCurrentBoost(i) {
         var boosts = document.getElementsByClassName('resets-container')[0].children[i].children[0].textContent
-        var boost = boosts.match(scientificNotationMatch)
+        var boost = boosts.match(scientificNotationMatch);
         if (boost === null) {
             return 0;
         }
@@ -68,7 +77,7 @@ InfinityDimensions:4,
                 }
                 element.click();
                 
-                (logLevel1<=LogLevel.Boost) && console.log("clicked " + boostNames[i]);
+                log(LogLevel.Boost, "clicked " + boostNames[i]);
                 
             }
             return true;
@@ -102,7 +111,7 @@ InfinityDimensions:4,
         var element = document.getElementsByClassName('btn-big-crunch')[0];
         if (element) {
             element.click();
-            (logLevel1<=LogLevel.BigCrunch) && console.log("clicked big crunch");
+            log(LogLevel.BigCrunch, "clicked big crunch");
             return true;
         } else {
             return false;
@@ -112,7 +121,7 @@ InfinityDimensions:4,
         var element = document.getElementsByClassName('o-primary-btn l-button-container')[1];
         if (element) {
             element.click();
-            (logLevel1<=LogLevel.MaxAll) && console.log("clicked max all");
+            log(LogLevel.MaxAll, "clicked max all");
             return true;
         } else {
             return false;
@@ -122,7 +131,7 @@ InfinityDimensions:4,
         // o-prestige-button o-infinity-button
         var element = document.getElementsByClassName('o-prestige-button o-infinity-button')[1];
         if (!element) {
-            (logLevel1<=LogLevel.INFO) && console.log("no big crunch button");
+            log(LogLevel.INFO, "no big crunch button");
             return false;
         }
         //innerText: "Big Crunch for 1.63e3 IP\nCurrent: 4.76e3 IP/min\nPeak: 5.46e3 IP/min\nat 163 IP"
@@ -133,7 +142,7 @@ InfinityDimensions:4,
 
         // var numbers = text.match(/\d+\.\d+e\d+/g);
         if (!numbers || !numbers[3]) {
-            (logLevel1<=LogLevel.INFO) && console.log("no numbers or too many numbers");
+            log(LogLevel.INFO, "no numbers or too many numbers");
             return false;
         }
         var currentIP = parseFloat(numbers[0]);
@@ -141,15 +150,15 @@ InfinityDimensions:4,
         var peakIPRate = parseFloat(numbers[2]);
         var peakIP = parseFloat(numbers[3]);
 
-        (logLevel1<=LogLevel.INFO) && console.log("currentIP: " + currentIP + " currentIPRate: " + currentIPRate + " peakIPRate: " + peakIPRate + " peakIP: " + peakIP);
+        log(LogLevel.INFO, "currentIP: " + currentIP + " currentIPRate: " + currentIPRate + " peakIPRate: " + peakIPRate + " peakIP: " + peakIP);
 
         if (currentIPRate < peakIPRate * brokenInfinityResetThreshold) {
             element.click();
             // we want scientific notation
-            (logLevel1<=LogLevel.BigCrunchBrokenInfinity) && console.log("clicked big crunch for " + currentIP.toExponential(2) + " IP at " + currentIPRate.toExponential(2) + " IP/min while peak is " + peakIPRate.toExponential(2) + " IP/min at " + peakIP.toExponential(2) + " IP");
+            log(LogLevel.BigCrunchBrokenInfinity, "clicked big crunch for " + currentIP.toExponential(2) + " IP at " + currentIPRate.toExponential(2) + " IP/min while peak is " + peakIPRate.toExponential(2) + " IP/min at " + peakIP.toExponential(2) + " IP");
             return true;
         } else {
-            (logLevel1<=LogLevel.INFO) && console.log("ip rate is fine");
+            log(LogLevel.INFO, "ip rate is fine");
             return false;
         }
 
@@ -158,18 +167,18 @@ InfinityDimensions:4,
     function autoBigCrunchInfinityDimensions() {
         var element = document.getElementsByClassName('o-prestige-button o-infinity-button')[0];
         if (!element) {
-            (logLevel1<=LogLevel.INFO) && console.log("no big crunch button");
+            log(LogLevel.INFO, "no big crunch button");
             return false;
         }
         element.click();
-        (logLevel1<=LogLevel.BigCrunchBrokenInfinity) && console.log("clicked big crunch");
+        log(LogLevel.BigCrunchBrokenInfinity, "clicked big crunch");
     }
 
     function autoMaxAllInfDimensions() {
         var element = document.getElementsByClassName('o-primary-btn o-primary-btn--subtab-option')[0];
         if (element) {
             element.click();
-            (logLevel1<=LogLevel.MaxAllInfDimensions) && console.log("clicked max all inf dimensions");
+            log(LogLevel.MaxAllInfDimensions, "clicked max all inf dimensions");
             return true;
         } else {
             return false;
@@ -188,7 +197,7 @@ InfinityDimensions:4,
             autoMaxAll();
             // autoBigCrunch();
         }, runInterval);
-        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: Entry");
+        log(LogLevel.ONCE, "autoClickElements stage: Entry");
     }
     else if (stage === Stages.Infinity) {
         setInterval(function () {
@@ -199,10 +208,10 @@ InfinityDimensions:4,
             autoBigCrunch();
         }, runInterval);
 
-        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: Infinity");
+        log(LogLevel.ONCE, "autoClickElements stage: Infinity");
     }
 
-    else if (stage === Stages.InfinityBreak) {
+    else if (stage === Stages.InfinityBreak) { 
         setInterval(function () {
             autoClickBoost();
             autoClickSacrifice();
@@ -214,7 +223,7 @@ InfinityDimensions:4,
         setInterval(function () {
             autoBigCrunchBrokenInfinity();
         }, runSlowInterval);
-        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityBreak");
+        log(LogLevel.ONCE, "autoClickElements stage: InfinityBreak");
     }
     else if (stage === Stages.InfinityBreak2) {
         
@@ -224,9 +233,9 @@ InfinityDimensions:4,
             autoMaxAll();
         }, runInterval);
 
-        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityBreak2");
+        log(LogLevel.ONCE, "autoClickElements stage: InfinityBreak2");
     }
-else if (stage === Stages.InfinityDimensions) {
+    else if (stage === Stages.InfinityDimensions) {
             
             setInterval(function () {
                 autoBigCrunchInfinityDimensions();
@@ -236,10 +245,10 @@ else if (stage === Stages.InfinityDimensions) {
             // setInterval(function () {
             //     autoMaxAllInfDimensions();
             // }, runSlowInterval);
-            (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityDimensions");
+            log(LogLevel.ONCE, "autoClickElements stage: InfinityDimensions");
     }
     else {
-        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: unknown. exiting");
+        log(LogLevel.ONCE, "autoClickElements stage: unknown. exiting");
     }
 }
 
