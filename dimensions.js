@@ -36,11 +36,12 @@ function autoClickElements(stage=0) {
         ONCE:99,
     };
     const logLevel1 = LogLevel.BigCrunchBrokenInfinity;
+    const scientificNotationMatch = /[\d.]+(?:[eE][+-]?\d+)?/g;
 
     // Function to get the current boost value
     function getCurrentBoost(i) {
         var boosts = document.getElementsByClassName('resets-container')[0].children[i].children[0].textContent
-        var boost = boosts.match(/\d+/)
+        var boost = boosts.match(scientificNotationMatch)
         if (boost === null) {
             return 0;
         }
@@ -77,7 +78,7 @@ function autoClickElements(stage=0) {
     function autoClickSacrifice() {
         var element = document.getElementsByClassName("o-primary-btn o-primary-btn--sacrifice")[0];
         if (element && sacrificeUse) {
-            var textContentMatch = element.textContent.match(/\d+\.\d+/);
+            var textContentMatch = element.textContent.match(scientificNotationMatch);
             if (textContentMatch === null) {
                 return false;
             }
@@ -125,7 +126,7 @@ function autoClickElements(stage=0) {
         // we want to extract all the numbers. the number might be scientific notation or normal notation
         var text = element.innerText;
 
-        var numbers = text.match(/[\d.]+(?:[eE][+-]?\d+)?/g);
+        var numbers = text.match(scientificNotationMatch);
 
         // var numbers = text.match(/\d+\.\d+e\d+/g);
         if (!numbers || !numbers[3]) {
