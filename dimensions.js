@@ -6,6 +6,7 @@ function autoClickElements(stage=0) {
         Entry:0,
         Infinity:1,
         InfinityBreak:2,
+        InfinityBreak2:3,
     }
 
 
@@ -189,6 +190,19 @@ function autoClickElements(stage=0) {
             autoBigCrunchBrokenInfinity();
         }, runSlowInterval);
         (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityBreak");
+    }
+    else if (stage === Stages.InfinityBreak2) {
+        
+        setInterval(function () {
+            autoClickSacrifice();
+            buyMaxTickSpeed();
+            autoMaxAll();
+        }, runInterval);
+
+        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityBreak2");
+    }
+    else {
+        (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: unknown. exiting");
     }
 }
 
