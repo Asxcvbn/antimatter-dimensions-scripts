@@ -165,7 +165,7 @@ function autoClickElements(stage=0) {
     }
 
     function autoBigCrunchInfinityDimensions() {
-        var element = document.getElementsByClassName('o-prestige-button o-infinity-button')[0];
+        var element = document.getElementsByClassName('o-prestige-button o-infinity-button')[1];
         if (!element) {
             log(LogLevel.INFO, "no big crunch button");
             return false;
