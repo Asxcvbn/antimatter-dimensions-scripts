@@ -7,6 +7,7 @@ function autoClickElements(stage=0) {
         Infinity:1,
         InfinityBreak:2,
         InfinityBreak2:3,
+InfinityDimensions:4,
     }
 
 
@@ -32,6 +33,7 @@ function autoClickElements(stage=0) {
         Boost: 4,
         BigCrunch: 5,
         BigCrunchBrokenInfinity: 6,    
+        MaxAllInfDimensions: 7,
         WARNING: 10,
         ERROR: 11,
         ONCE:99,
@@ -152,8 +154,33 @@ function autoClickElements(stage=0) {
         }
 
     }
+
+    function autoBigCrunchInfinityDimensions() {
+        var element = document.getElementsByClassName('o-prestige-button o-infinity-button')[0];
+        if (!element) {
+            (logLevel1<=LogLevel.INFO) && console.log("no big crunch button");
+            return false;
+        }
+        element.click();
+        (logLevel1<=LogLevel.BigCrunchBrokenInfinity) && console.log("clicked big crunch");
+    }
+
+    function autoMaxAllInfDimensions() {
+        var element = document.getElementsByClassName('o-primary-btn o-primary-btn--subtab-option')[0];
+        if (element) {
+            element.click();
+            (logLevel1<=LogLevel.MaxAllInfDimensions) && console.log("clicked max all inf dimensions");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+
+
+
     if (stage === Stages.Entry) {
-        // Set an interval to run both functions every 1 second (you can adjust the interval as needed)
         setInterval(function () {
             autoClickBoost();
             autoClickSacrifice();
@@ -164,7 +191,6 @@ function autoClickElements(stage=0) {
         (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: Entry");
     }
     else if (stage === Stages.Infinity) {
-        // Set an interval to run both functions every 1 second (you can adjust the interval as needed)
         setInterval(function () {
             autoClickBoost();
             autoClickSacrifice();
@@ -177,7 +203,6 @@ function autoClickElements(stage=0) {
     }
 
     else if (stage === Stages.InfinityBreak) {
-        // Set an interval to run both functions every 1 second (you can adjust the interval as needed)
         setInterval(function () {
             autoClickBoost();
             autoClickSacrifice();
@@ -201,10 +226,22 @@ function autoClickElements(stage=0) {
 
         (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityBreak2");
     }
+else if (stage === Stages.InfinityDimensions) {
+            
+            setInterval(function () {
+                autoBigCrunchInfinityDimensions();
+                autoMaxAllInfDimensions();
+            }, 1000 * 60 * 5); // every 5 minutes
+    
+            // setInterval(function () {
+            //     autoMaxAllInfDimensions();
+            // }, runSlowInterval);
+            (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: InfinityDimensions");
+    }
     else {
         (logLevel1<=LogLevel.ONCE) && console.log("autoClickElements stage: unknown. exiting");
     }
 }
 
 // Call the autoClickElements function to start the auto-click functionality
-autoClickElements();
+autoClickElements(4);
